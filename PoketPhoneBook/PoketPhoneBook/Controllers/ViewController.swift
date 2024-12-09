@@ -2,11 +2,12 @@
 //  ViewController.swift
 //  PoketPhoneBook
 //
-//  Created by t2023-m0033 on 12/6/24.
+//  Created by Watson22_YJ on 12/6/24.
 //
 
 import UIKit
 import SnapKit
+    // MARK: - MainViewController
 
 final class ViewController: UIViewController {
     
@@ -23,33 +24,32 @@ final class ViewController: UIViewController {
     var memberListManager = MemberListManager()
     
     // 네비게이션바에 넣기 위한 버튼
-    lazy var plusButton: UIBarButtonItem = {
+    private lazy var plusButton: UIBarButtonItem = {
         let button = UIBarButtonItem(title: "추가", style: .plain, target: self, action: #selector(plusButtonTapped))
+        button.tintColor = .gray
         return button
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        setupDatas()
+      
         setupNaviBar()
         setupTableViewConstraints()
-        
-        
-        
+        setupDatas()
     }
     
-    func setupNaviBar() {
+    private func setupNaviBar() {
         title = "친구 목록"
         
         // 네비게이션바 설정관련
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithOpaqueBackground()  // 불투명으로
-        appearance.backgroundColor = .white
-        navigationController?.navigationBar.tintColor = .gray
-        navigationController?.navigationBar.standardAppearance = appearance
-        navigationController?.navigationBar.compactAppearance = appearance
-        navigationController?.navigationBar.scrollEdgeAppearance = appearance
+//        let appearance = UINavigationBarAppearance()
+//        appearance.configureWithOpaqueBackground()  // 불투명으로
+//        appearance.backgroundColor = .white
+//     //   navigationController?.navigationBar.tintColor = .gray
+//        navigationController?.navigationBar.standardAppearance = appearance
+//        navigationController?.navigationBar.compactAppearance = appearance
+//        navigationController?.navigationBar.scrollEdgeAppearance = appearance
         
         // 네비게이션바 오른쪽 상단 버튼 설정
         self.navigationItem.rightBarButtonItem = self.plusButton
@@ -71,12 +71,15 @@ final class ViewController: UIViewController {
         }
     }
     
-    // 추가버튼
+     // 추가버튼 클릭 시 다음 화면으로 이동
     @objc func plusButtonTapped() {
-        print("추가버튼 클릭")
+        // 다음화면으로 이동 (멤버는 전달하지 않음)
+        let phoneBookVC = PhoneBookViewController()
         
+        // 화면이동
+        navigationController?.pushViewController(phoneBookVC, animated: true)
+     
     }
-    
 }
     // MARK: - 테이블뷰 확장
 
@@ -87,7 +90,7 @@ extension ViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCell.id, for: indexPath) as! TableViewCell
-        
+        // 멤버리스트매니저를 통해 받아온 데이터를 셀에 할당
         let member = memberListManager.getMembersList()[indexPath.row]
         
         cell.mainImageView.image = member.memberImage

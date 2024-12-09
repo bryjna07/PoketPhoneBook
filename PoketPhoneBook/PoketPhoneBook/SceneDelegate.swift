@@ -2,7 +2,7 @@
 //  SceneDelegate.swift
 //  PoketPhoneBook
 //
-//  Created by t2023-m0033 on 12/6/24.
+//  Created by Watson22_YJ on 12/6/24.
 //
 
 import UIKit
@@ -16,6 +16,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // 네이게이션 바 세팅
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
+        
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = .white
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.black]
+        UINavigationBar.appearance().standardAppearance = appearance
+        UINavigationBar.appearance().compactAppearance = appearance
+        UINavigationBar.appearance().scrollEdgeAppearance = appearance
 
         let naviVC = UINavigationController(rootViewController: ViewController())
 

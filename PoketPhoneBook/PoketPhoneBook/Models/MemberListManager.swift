@@ -2,7 +2,7 @@
 //  MemberListManager.swift
 //  PoketPhoneBook
 //
-//  Created by t2023-m0033 on 12/6/24.
+//  Created by Watson22_YJ on 12/6/24.
 //
 
 import UIKit
@@ -15,10 +15,10 @@ final class MemberListManager {
     // 테스트 데이터
     func makeMembersListDatas() {
         membersList = [
-            Member(memberImage: UIImage(systemName: "mug.fill") , name: "김르탄", phone: "010-1111-2222"),
-            Member(memberImage: UIImage(systemName: "mug.fill") , name: "내배캠", phone: "010-2222-3333"),
-            Member(memberImage: UIImage(systemName: "mug.fill") , name: "앱개발", phone: "010-3333-4444"),
-            Member(memberImage: UIImage(systemName: "mug.fill") , name: "화이팅", phone: "010-5555-6666")
+            Member(memberImage: UIImage(named: "Ball"), name: "김르탄", phone: "010-1111-2222"),
+            Member(memberImage: UIImage(named: "Ball"), name: "내배캠", phone: "010-2222-3333"),
+            Member(memberImage: UIImage(named: "Ball"), name: "앱개발", phone: "010-3333-4444"),
+            Member(memberImage: UIImage(named: "Ball"), name: "화이팅", phone: "010-5555-6666")
         ]
     }
     
