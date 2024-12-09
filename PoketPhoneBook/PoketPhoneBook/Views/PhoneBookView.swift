@@ -8,14 +8,15 @@
 import UIKit
     // MARK: - DetailView UI
 final class PhoneBookView: UIView {
-
+    
     //MARK: - UI구현
     
     let randomImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.layer.borderWidth = 1
+        imageView.layer.borderWidth = 0.5
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 75
+        imageView.contentMode = .scaleToFill
         return imageView
     }()
     
@@ -54,6 +55,7 @@ final class PhoneBookView: UIView {
         tf.autocorrectionType = .no
         tf.spellCheckingType = .no
         tf.clearsOnBeginEditing = false
+        tf.returnKeyType = .next
         return tf
     }()
     
@@ -81,6 +83,8 @@ final class PhoneBookView: UIView {
         tf.autocorrectionType = .no
         tf.spellCheckingType = .no
         tf.clearsOnBeginEditing = false
+        tf.keyboardType = .numberPad
+        tf.placeholder = "010-0000-0000"
         return tf
     }()
     
@@ -115,10 +119,6 @@ final class PhoneBookView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // 화면 밖 터치시 키보드 내리기
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.endEditing(true)
-    }
     
        // MARK: - 오토레이아웃
     private func configureUI()  {
@@ -147,8 +147,5 @@ final class PhoneBookView: UIView {
         phoneGuideLabel.snp.makeConstraints { make in
             make.width.equalTo(70)
         }
-        
-
     }
-
 }
