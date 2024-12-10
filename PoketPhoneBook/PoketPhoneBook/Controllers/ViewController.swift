@@ -21,14 +21,7 @@ final class ViewController: UIViewController {
         return tableView
     }()
     
-    var memberListManager = MemberListManager()
-    
-    // 네비게이션바에 넣기 위한 버튼
-    private lazy var plusButton: UIBarButtonItem = {
-        let button = UIBarButtonItem(title: "추가", style: .plain, target: self, action: #selector(plusButtonTapped))
-        button.tintColor = .gray
-        return button
-    }()
+    var memberListManager = CoreDataManager.shared
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,28 +29,22 @@ final class ViewController: UIViewController {
       
         setupNaviBar()
         setupTableViewConstraints()
-        setupDatas()
+
+    }
+    // 뷰가 나타나는 시점마다 리로드
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
     }
     
     private func setupNaviBar() {
         title = "친구 목록"
         
-        // 네비게이션바 설정관련
-//        let appearance = UINavigationBarAppearance()
-//        appearance.configureWithOpaqueBackground()  // 불투명으로
-//        appearance.backgroundColor = .white
-//     //   navigationController?.navigationBar.tintColor = .gray
-//        navigationController?.navigationBar.standardAppearance = appearance
-//        navigationController?.navigationBar.compactAppearance = appearance
-//        navigationController?.navigationBar.scrollEdgeAppearance = appearance
-        
         // 네비게이션바 오른쪽 상단 버튼 설정
-        self.navigationItem.rightBarButtonItem = self.plusButton
+        let plusButton = UIBarButtonItem(title: "추가", style: .plain, target: self, action: #selector(plusButtonTapped))
+        self.navigationItem.rightBarButtonItem = plusButton
     }
     
-    func setupDatas() {
-        memberListManager.makeMembersListDatas()
-    }
     
     //MARK: - 오토레이아웃
     
@@ -85,17 +72,15 @@ final class ViewController: UIViewController {
 
 extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return memberListManager.getMembersList().count
+        return memberListManager.getMemberFromCoreData().count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCell.id, for: indexPath) as! TableViewCell
         // 멤버리스트매니저를 통해 받아온 데이터를 셀에 할당
-        let member = memberListManager.getMembersList()[indexPath.row]
-        
-        cell.mainImageView.image = member.memberImage
-        cell.memberNameLabel.text = member.name
-        cell.phoneNumberLabel.text = member.phone
+        let member = memberListManager.getMemberFromCoreData()
+        cell.memberData = member[indexPath.row]
+
         cell.selectionStyle = .none
         
         return cell

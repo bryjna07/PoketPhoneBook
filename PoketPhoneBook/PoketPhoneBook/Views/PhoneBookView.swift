@@ -84,7 +84,7 @@ final class PhoneBookView: UIView {
         tf.spellCheckingType = .no
         tf.clearsOnBeginEditing = false
         tf.keyboardType = .numberPad
-        tf.placeholder = "010-0000-0000"
+        tf.placeholder = "01012345678"
         return tf
     }()
     

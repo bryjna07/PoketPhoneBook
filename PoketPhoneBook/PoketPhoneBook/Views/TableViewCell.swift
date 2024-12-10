@@ -46,6 +46,13 @@ final class TableViewCell: UITableViewCell {
         return stview
     }()
     
+    // MemberData를 전달받을 변수 (전달 받으면 ==> 표시하는 메서드 실행)
+    var memberData: MemberData? {
+        didSet {
+            configureUIwithData()
+        }
+    }
+    
     //MARK: - 생성자 셋팅
     // 셀 생성자
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -85,5 +92,15 @@ final class TableViewCell: UITableViewCell {
         
     }
     
-    
+    // 저장된 데이터로 UI 표시하기
+    func configureUIwithData() {
+        memberNameLabel.text = memberData?.name
+        phoneNumberLabel.text = memberData?.phoneNumber
+        // 변환한 이미지를 메인이미지에 담기
+        if let imageData = memberData?.image, let image = UIImage(data: imageData) {
+            mainImageView.image = image
+        } else {
+            mainImageView.image = UIImage(named: "ball") // 기본 이미지 설정
+        }
+    }
 }
