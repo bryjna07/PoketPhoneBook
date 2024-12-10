@@ -53,6 +53,13 @@ final class TableViewCell: UITableViewCell {
         }
     }
     
+    // 셀이 재사용되기 전에 호출되는 메서드
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        // 이미지가 바뀌는 것처럼 보이는 현상을 없애기 위함
+        self.mainImageView.image = nil
+    }
+    
     //MARK: - 생성자 셋팅
     // 셀 생성자
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

@@ -91,7 +91,7 @@ final class PhoneBookViewController: UIViewController {
             self.navigationController?.popViewController(animated: true)
         }
     }
-    
+    // 수정 버튼 클릭 시
     @objc func updateButtonTapped() {
         
         if let memberData = self.memberData {
@@ -104,7 +104,7 @@ final class PhoneBookViewController: UIViewController {
             }
         }
     }
-    
+    // 삭제 버튼 클릭 시
     @objc func deleteButtonTapped() {
         if let memberData = self.memberData {
             memberListManager.deleteMember(data: memberData) {
@@ -113,6 +113,7 @@ final class PhoneBookViewController: UIViewController {
             }
         }
     }
+        // MARK: - 랜덤 이미지 받아오기
     @objc func randomButtonTapped(_ sender: UIButton) {
         fetchPoketmonData()
     }
