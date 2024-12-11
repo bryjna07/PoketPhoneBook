@@ -59,4 +59,17 @@ final class NetworkManager {
         }
     }
     
+    // 서버에서 포켓몬 데이터를 받아오는 메서드
+    func fetchPoketmonData(completion: @escaping (Result<PoketmonData,AFError>) -> Void) {
+        let randomNum = Int.random(in: 1...1000)
+        let url = URL(string: "\(requestUrl)\(randomNum)")
+        guard let urlString = url else {
+            print("잘못된 URL")
+            return
+        }
+        
+        fetchDateByAlamofire(url: urlString) { [weak self] (result: Result<PoketmonData, AFError>) in
+            completion(result)
+        }
+    }
 }

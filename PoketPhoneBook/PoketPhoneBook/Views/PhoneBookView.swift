@@ -16,7 +16,7 @@ final class PhoneBookView: UIView {
         imageView.layer.borderWidth = 0.5
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 75
-        imageView.contentMode = .scaleToFill
+        imageView.contentMode = .scaleAspectFit
         return imageView
     }()
     
@@ -56,6 +56,7 @@ final class PhoneBookView: UIView {
         tf.spellCheckingType = .no
         tf.clearsOnBeginEditing = false
         tf.returnKeyType = .next
+        tf.clearButtonMode = .always
         return tf
     }()
     
@@ -85,6 +86,7 @@ final class PhoneBookView: UIView {
         tf.clearsOnBeginEditing = false
         tf.keyboardType = .numberPad
         tf.placeholder = "01012345678"
+        tf.clearButtonMode = .always
         return tf
     }()
     

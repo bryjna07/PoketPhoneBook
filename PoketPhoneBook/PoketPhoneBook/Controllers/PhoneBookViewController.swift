@@ -61,7 +61,7 @@ final class PhoneBookViewController: UIViewController {
         if memberData != nil {
             title = memberData?.name
             phoneBookView.nameTextField.text = memberData?.name
-            phoneBookView.phoneNumberTextField.text = memberData?.phoneNumber
+            phoneBookView.phoneNumberTextField.text = memberData?.phoneNumber?.withoutHyphen
             if let imageData = memberData?.image, let image = UIImage(data: imageData) {
                 phoneBookView.randomImageView.image = image
             }
@@ -111,10 +111,18 @@ final class PhoneBookViewController: UIViewController {
             memberData.name = phoneBookView.nameTextField.text
             memberData.phoneNumber = phoneBookView.phoneNumberTextField.text?.withHypen
             memberData.image = phoneBookView.randomImageView.image?.jpegData(compressionQuality: 0.5)
-            coreDataManager.updateMember(newMemberData: memberData) {
-                print("수정 완료")
-                self.navigationController?.popViewController(animated: true)
+            if (memberData.name!.count != 0) && (memberData.phoneNumber!.count > 9) && memberData.image != nil {
+                coreDataManager.updateMember(newMemberData: memberData) {
+                    print("수정 완료")
+                    self.navigationController?.popViewController(animated: true)
+                }
+            } else {
+                let alert = UIAlertController(title: "수정 실패", message: "올바른 정보를 입력해주세요!", preferredStyle: .alert)
+                let succes = UIAlertAction(title: "확인", style: .default)
+                alert.addAction(succes)
+                present(alert, animated: true)
             }
+            
         }
     }
     // 삭제 버튼 클릭 시
@@ -138,18 +146,7 @@ final class PhoneBookViewController: UIViewController {
     
     // MARK: - API 랜덤 이미지 받아오기
     @objc func randomButtonTapped(_ sender: UIButton) {
-        fetchPoketmonData()
-    }
-    // 서버에서 포켓몬 데이터를 받아오는 메서드
-    private func fetchPoketmonData() {
-        let randomNum = Int.random(in: 1...1000)
-        let url = URL(string: "\(requestUrl)\(randomNum)")
-        guard let urlString = url else {
-            print("잘못된 URL")
-            return
-        }
-        
-        networkManager.fetchDateByAlamofire(url: urlString) { [weak self] (result: Result<PoketmonData, AFError>) in
+        networkManager.fetchPoketmonData { [weak self] result in
             guard let self else { return }
             switch result {
             case .success(let result):
@@ -168,6 +165,8 @@ final class PhoneBookViewController: UIViewController {
                 print("데이터 로드 실패: \(error)")
             }
         }
+    }
+  
         // URL Session 사용시
         //        networkManager.fetchData(url: url!) { [weak self] (result: PoketmonData?) in
         //            guard let self, let result else { return }
@@ -183,7 +182,7 @@ final class PhoneBookViewController: UIViewController {
         //                }
         //            }
         //        }
-    }
+    
     
     // 다른 곳을 터치하면 키보드 내리기
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -206,7 +205,7 @@ extension PhoneBookViewController: UITextFieldDelegate {
     
     // 텍스트필드에 글자내용이 변할때마다 관련 메서드
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        // 숫자가 안지워져서 추가한 코드
+        // 백스페이스 허용 코드
         if string.isEmpty {
             return true
         }
@@ -235,4 +234,9 @@ extension String {
         
         return stringWithHypen
     }
+    
+    /// 하이픈 제거 메서드
+     public var withoutHyphen: String {
+         return self.replacingOccurrences(of: "-", with: "")
+     }
 }
