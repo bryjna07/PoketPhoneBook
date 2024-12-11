@@ -6,14 +6,12 @@
 //
 
 import UIKit
-    // MARK: - MainView(Cell) UI
+// MARK: - MainView(Cell) UI
 final class TableViewCell: UITableViewCell {
     // 저장속성 . 접근용이, 실수방지
     static let id = "MemberCell"
-    
-    
+
     //MARK: - UI구현
-    
     let mainImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.borderWidth = 0.5
@@ -72,7 +70,7 @@ final class TableViewCell: UITableViewCell {
     }
     
     //MARK: - 오토레이아웃 셋팅
-  
+    
     private func configureUI() {
         [
             mainImageView,
@@ -96,7 +94,6 @@ final class TableViewCell: UITableViewCell {
         phoneNumberLabel.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
         }
-        
     }
     
     // 저장된 데이터로 UI 표시하기
@@ -106,8 +103,6 @@ final class TableViewCell: UITableViewCell {
         // 변환한 이미지를 메인이미지에 담기
         if let imageData = memberData?.image, let image = UIImage(data: imageData) {
             mainImageView.image = image
-        } else {
-            mainImageView.image = UIImage(named: "ball") // 기본 이미지 설정
         }
     }
 }

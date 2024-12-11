@@ -14,17 +14,14 @@ struct PoketmonData: Codable {
     let height, weight: Int
     let sprites: Sprites
 }
-
 // MARK: - Sprites
 struct Sprites: Codable {
     let other: Other
 }
-
 // MARK: - Other
 struct Other: Codable {
     let home: Home
 }
-
 // MARK: - Home
 struct Home: Codable {
     let imageUrl: String

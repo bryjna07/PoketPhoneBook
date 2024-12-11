@@ -50,12 +50,12 @@ final class CoreDataManager {
             if NSEntityDescription.entity(forEntityName: MemberData.className, in: context) != nil {
                 
                 let memberData = MemberData(context: context)
-                    // MARK: - MemberData에 실제 데이터 할당
-                    memberData.name = name
-                    memberData.phoneNumber = phone
-                    memberData.image = image
-                    
-                    appDelegate?.saveContext()
+                // MARK: - MemberData에 실제 데이터 할당
+                memberData.name = name
+                memberData.phoneNumber = phone
+                memberData.image = image
+                
+                appDelegate?.saveContext()
             }
         }
         completion()
@@ -113,14 +113,14 @@ final class CoreDataManager {
             do {
                 // 요청서를 통해서 데이터 가져오기
                 let fetchedMemberList = try context.fetch(request)
-                    // 배열의 첫번째
+                // 배열의 첫번째
                 if var targetMember = fetchedMemberList.first {
-                        
-                        // MARK: - MemberData에 실제 데이터 재할당(바꾸기)
-                        targetMember = newMemberData
-                        
-                        appDelegate?.saveContext()
-                    }
+                    
+                    // MARK: - MemberData에 실제 데이터 재할당(바꾸기)
+                    targetMember = newMemberData
+                    
+                    appDelegate?.saveContext()
+                }
                 completion()
             } catch {
                 print("지우는 것 실패")

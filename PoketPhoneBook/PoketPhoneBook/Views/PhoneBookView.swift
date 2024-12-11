@@ -6,7 +6,7 @@
 //
 
 import UIKit
-    // MARK: - DetailView UI
+// MARK: - DetailView UI
 final class PhoneBookView: UIView {
     
     //MARK: - UI구현
@@ -27,7 +27,6 @@ final class PhoneBookView: UIView {
             randomImageView,
             randomButton
         ].forEach { view.addSubview($0) }
-        //view.backgroundColor = .yellow
         return view
     }()
     
@@ -39,7 +38,7 @@ final class PhoneBookView: UIView {
         button.setTitleColor(.lightGray, for: .normal)
         return button
     }()
-
+    
     private let nameGuideLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 16)
@@ -110,7 +109,6 @@ final class PhoneBookView: UIView {
     
     
     //MARK: - 생성자 셋팅
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .white
@@ -122,7 +120,7 @@ final class PhoneBookView: UIView {
     }
     
     
-       // MARK: - 오토레이아웃
+    // MARK: - 오토레이아웃
     private func configureUI()  {
         self.addSubview(stackView)
         

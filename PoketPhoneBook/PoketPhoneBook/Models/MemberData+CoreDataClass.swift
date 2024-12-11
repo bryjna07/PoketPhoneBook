@@ -2,7 +2,7 @@
 //  MemberData+CoreDataClass.swift
 //  PoketPhoneBook
 //
-//  Created by t2023-m0033 on 12/9/24.
+//  Created by Watson22_YJ on 12/9/24.
 //
 //
 

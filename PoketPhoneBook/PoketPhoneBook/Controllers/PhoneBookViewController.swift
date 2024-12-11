@@ -9,7 +9,6 @@ import UIKit
 import Alamofire
 import SnapKit
 // MARK: - DetailViewController
-
 final class PhoneBookViewController: UIViewController {
     
     private let phoneBookView = PhoneBookView()
@@ -34,13 +33,11 @@ final class PhoneBookViewController: UIViewController {
         super.viewDidLoad()
         setupNaviBar()
         setup()
-        
     }
     
     func setup() {
         phoneBookView.nameTextField.delegate = self
         phoneBookView.phoneNumberTextField.delegate = self
-        
         phoneBookView.randomButton.addTarget(self, action: #selector(randomButtonTapped), for: .touchUpInside)
     }
     // 정보 유무에 따른 네비바버튼 이름 변경
@@ -54,7 +51,7 @@ final class PhoneBookViewController: UIViewController {
             self.navigationItem.rightBarButtonItem = applyButton
         }
     }
-    
+    // MARK: - SELETED CELL
     // 선택된 셀의 정보를 받아 UI 표시하기
     func configureSelectedData() {
         
@@ -79,12 +76,9 @@ final class PhoneBookViewController: UIViewController {
                 make.top.equalTo(phoneBookView.phoneNumberTextField.snp.bottom).offset(20)
                 make.centerX.equalToSuperview()
             }
-            
         }
     }
-    
-    // MARK: - 버튼 관련
-    
+    // MARK: - CREATE
     @objc func applyButtonTapped() {
         //적용버튼 눌렀을 때
         let name = phoneBookView.nameTextField.text
@@ -104,6 +98,7 @@ final class PhoneBookViewController: UIViewController {
             present(alert, animated: true)
         }
     }
+    // MARK: - UPDATE
     // 수정 버튼 클릭 시
     @objc func updateButtonTapped() {
         
@@ -125,6 +120,7 @@ final class PhoneBookViewController: UIViewController {
             
         }
     }
+    // MARK: - DELETE
     // 삭제 버튼 클릭 시
     @objc func deleteButtonTapped() {
         // 알럿창 띄우기 - 확인 클릭 시 삭제
@@ -142,8 +138,6 @@ final class PhoneBookViewController: UIViewController {
         alert.addAction(cancel)
         self.present(alert, animated: true)
     }
-    
-    
     // MARK: - API 랜덤 이미지 받아오기
     @objc func randomButtonTapped(_ sender: UIButton) {
         networkManager.fetchPoketmonData { [weak self] result in
@@ -166,23 +160,6 @@ final class PhoneBookViewController: UIViewController {
             }
         }
     }
-  
-        // URL Session 사용시
-        //        networkManager.fetchData(url: url!) { [weak self] (result: PoketmonData?) in
-        //            guard let self, let result else { return }
-        //            guard let imageUrl = URL(string: result.sprites.other.home.imageUrl) else { return }
-        //
-        //            // image를 로드하는 작업은 백그라운드 쓰레드에서 작업
-        //            if let data = try? Data(contentsOf: imageUrl) {
-        //                if let image = UIImage(data: data) {
-        //
-        //                    DispatchQueue.main.async {
-        //                        self.phoneBookView.randomImageView.image = image
-        //                    }
-        //                }
-        //            }
-        //        }
-    
     
     // 다른 곳을 터치하면 키보드 내리기
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -236,7 +213,7 @@ extension String {
     }
     
     /// 하이픈 제거 메서드
-     public var withoutHyphen: String {
-         return self.replacingOccurrences(of: "-", with: "")
-     }
+    public var withoutHyphen: String {
+        return self.replacingOccurrences(of: "-", with: "")
+    }
 }
