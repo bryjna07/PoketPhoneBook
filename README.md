@@ -45,6 +45,7 @@
 
 ### 데이터 처리
 - CoreData
+- Dev 에 URLSession 버전 추가 (24/12/12) 
 
 ### API 통신
 - Alamofire
