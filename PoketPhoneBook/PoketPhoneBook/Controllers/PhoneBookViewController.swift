@@ -140,23 +140,21 @@ final class PhoneBookViewController: UIViewController {
     }
     // MARK: - API 랜덤 이미지 받아오기
     @objc func randomButtonTapped(_ sender: UIButton) {
-        networkManager.fetchPoketmonData { [weak self] result in
+        networkManager.fetchRandomPoketmonData { [weak self] result in
             guard let self else { return }
-            switch result {
-            case .success(let result):
-                
-                guard let imageUrl = URL(string: result.sprites.other.home.imageUrl) else { return }
-                
-                // Alamofire 를 사용한 이미지 로드
-                AF.request(imageUrl).responseData { response in
-                    if let data = response.data, let image = UIImage(data: data) {
-                        DispatchQueue.main.async {
-                            self.phoneBookView.randomImageView.image = image
-                        }
+            
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let poketmon):
+                    // 이미지 URL 설정
+                    if let imageUrl = poketmon.sprites?.other?.home?.imageUrl {
+                        self.phoneBookView.imageUrl = imageUrl
+                    } else {
+                        print("이미지 URL 없음")
                     }
+                case .failure(let error):
+                    print("포켓몬 데이터 로드 실패: \(error)")
                 }
-            case .failure(let error):
-                print("데이터 로드 실패: \(error)")
             }
         }
     }

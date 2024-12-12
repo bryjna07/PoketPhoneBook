@@ -20,6 +20,12 @@ final class PhoneBookView: UIView {
         return imageView
     }()
     
+    var imageUrl: String? {
+        didSet {
+            loadImage()
+        }
+    }
+    
     // 정렬을 깔끔하게 하기 위한 컨테이너뷰
     private lazy var imageContainView: UIView = {
         let view = UIView()
@@ -146,6 +152,22 @@ final class PhoneBookView: UIView {
         }
         phoneGuideLabel.snp.makeConstraints { make in
             make.width.equalTo(70)
+        }
+    }
+    
+    // URL ===> 이미지를 셋팅하는 메서드
+    // 이미지의 url을 먼저 받고 그 url로 이미지를 한번 더 요청함
+    private func loadImage() {
+        guard let urlString = self.imageUrl, let url = URL(string: urlString)  else { return }
+        
+        DispatchQueue.global().async {
+            
+            // url을 가지고 서버랑 통신하는 생성자, 동기적으로 되어있기 때문에 비동기처리를 따로 해줘야함
+            guard let data = try? Data(contentsOf: url) else { return }
+            
+            DispatchQueue.main.async {
+                self.randomImageView.image = UIImage(data: data)
+            }
         }
     }
 }

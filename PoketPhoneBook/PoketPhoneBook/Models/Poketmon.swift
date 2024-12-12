@@ -8,23 +8,24 @@
 import Foundation
 
 // MARK: - 포켓몬 데이터 모델
-struct PoketmonData: Codable {
-    let id: Int
-    let name: String
-    let height, weight: Int
-    let sprites: Sprites
+
+struct Poketmon: Codable {
+    let id: Int?
+    let name: String?
+    let height, weight: Int?
+    let sprites: Sprites?
 }
 // MARK: - Sprites
 struct Sprites: Codable {
-    let other: Other
+    let other: Other?
 }
 // MARK: - Other
 struct Other: Codable {
-    let home: Home
+    let home: Home?
 }
 // MARK: - Home
 struct Home: Codable {
-    let imageUrl: String
+    let imageUrl: String?
 
     enum CodingKeys: String, CodingKey {
         case imageUrl = "front_shiny"
